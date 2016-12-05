@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>App</title>
+
+    <!-- In production use:
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body ng-app="mailApp">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img width="117" height="30" class="logo" alt="Angular JS Mail Demo App" alt="Brand"
+                     src="./angularjs.svg">
+            </a>
+        </div>
+    </div>
+</nav>
+<div ng-controller="MailCtrl as vm">
+    <div class="col-sm-12"><h1></h1></div>
+
+    <form name="form" novalidate class="mail-form form-horizontal">
+        <div ng-show="vm.response" ng-class="vm.response.success ? 'alert-success' : 'alert-danger'" class="col-sm-12 alert" role="alert">
+            <span class="col-sm-offset-2 col-sm-10">{{vm.responseMessage}}</span>
+        </div>
+
+        <div class="form-group required" ng-class="{'has-error has-feedback': form.emailTo.$error.emails}">
+            <label for="emailTo" class="col-sm-2 control-label">To</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="emailTo" id="emailTo" placeholder="comma separated emails"
+                       ng-model="vm.email.to" required emails>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error has-feedback': form.emailCC.$error.emails}">
+            <label for="emailCC" class="col-sm-2 control-label">CC</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="emailCC" id="emailCC" placeholder="comma separated emails"
+                       ng-model="vm.email.cc" emails>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error has-feedback': form.emailBCC.$error.emails}">
+            <label for="emailBCC" class="col-sm-2 control-label">BCC</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="emailBCC" id="emailBCC" placeholder="comma separated emails"
+                       ng-model="vm.email.bcc" emails>
+            </div>
+        </div>
+
+        <div class="form-group required">
+            <label for="emailSubject" class="col-sm-2 control-label">Subject</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="emailSubject"
+                       ng-model="vm.email.subject" required>
+            </div>
+        </div>
+
+        <div class="form-group required">
+            <label for="emailBody" class="col-sm-2 control-label">Message</label>
+            <div class="col-sm-10">
+        <textarea class="form-control" rows="10"
+                  id="emailBody" ng-model="vm.email.body" required></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="button" ng-click="reset()" class="btn btn-primary" value="Reset"/>
+                <input type="submit"
+                       ng-disabled="form.$invalid"
+                       ng-click="vm.submit(vm)" class="btn btn-primary" value="Send"/>
+            </div>
+        </div>
+    </form>
+    <!--<pre>user = {{vm | json}}</pre>-->
+</div>
+
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+-->
+<script src="bower_components/angular/angular.js"></script>
+
+<!-- Main App -->
+<script src="app.js"></script>
+
+<!-- Directives -->
+<script src="common/directives/common.directives.js"></script>
+<script src="common/directives/emailList.js"></script>
+
+<!-- Services -->
+<script src="common/services/common.services.js"></script>
+<script src="common/services/mailService.js"></script>
+
+<!-- Controllers -->
+<script src="mailer/mailCtrl.js"></script>
+
+</body>
+</html>
